@@ -1,0 +1,81 @@
+---
+title: "Candy Example"
+author: "Molly Caldwell"
+date: "2022-10-12"
+output: word_document
+---
+
+```{r setup, include = FALSE}
+#set base chunk options (applied to every chunk unless otherwise specified)
+knitr::opts_chunk$set(echo = FALSE, error = FALSE, message = FALSE)
+
+#set working directory
+knitr::opts_knit$set(root.dir = "C:/Users/molly/OneDrive - University of Wyoming/Documents/UWyo/Workshops_seminars/RMarkdown/Merkle Lab 10.2022/")
+```
+
+```{r Load libraries}
+#load libraries
+library(DT) #for first interactive table
+library(tidyverse)
+library(kableExtra) #for word regression table
+library(broom) #for word regression table
+```
+
+```{r, include = FALSE}
+#Run candy data prep source script
+source("candy_data_prep.R", local = knitr::knit_global())
+```
+
+```{r, include = FALSE}
+#select candy_name, chocolate, sugar_percentile, and num_votes from candy
+candy_sub <- candy %>%
+  select(c("candy_name", "chocolate", "sugar_percentile", "num_votes"))
+```
+
+
+# Candy votes {-}
+
+::: {#Table1}
+A table example:
+:::
+
+```{r}
+DT::datatable(candy_sub, options = list(pageLength = 10))
+```
+
+# Analysis {-}
+
+I'm using a linear regression to test how candy traits correspond to voters' preference.
+
+I tested the response of votes per candy type against the predictor variables chocolate and sugar percentile.
+
+> Linear regression formula
+
+::: {#eq1} 
+:::
+
+$$num.votes=B_0+B_1*chocolate+B_2*sugar.percentile$$
+
+# Results {-}
+
+```{r message = FALSE, warning = FALSE}
+#variable effects on num_votes
+candy_mod <- lm(num_votes ~ chocolate + sugar_percentile, data = candy_sub)
+
+tidy(candy_mod) %>%  kbl(caption="Summary Statistics",
+                    format= "simple",
+                    align="r") %>%
+  kable_classic(full_width = F, html_font = "helvetica")
+```
+
+## Chocolate effects {-}
+
+```{r chocolate plot, warning = FALSE, fig.align='center'}
+  ggplot(candy_sub, aes(x = num_votes, y = chocolate)) + 
+  geom_point(alpha = .5) +
+  stat_smooth(method = "glm", se = FALSE, method.args = list(family = binomial)) +
+  labs(x = "No. votes", y = "Contains chocolate",
+       title = "Effects of chocolate on candy votes")
+
+```
+
