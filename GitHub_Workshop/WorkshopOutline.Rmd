@@ -1,0 +1,67 @@
+---
+title: "R-Ladies GitHub Workshop"
+author: "Alice Stears"
+date: "2023-03-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Workshop Draft Outline
+#### Workshop date 4/14/23
+
+#### 1. Introduction to version control as a concept 
+- why would a person want to use version control? 
+  - keep track of changes for yourself, esp. across multiple computers
+  - keep track of and share changes on collaborative projects
+- version control is typically used for code (*not* data), but can also be used for writing, presentations, etc. 
+
+#### 2. Basics of git
+- tracks changes in a "repository," and stores everything (as well as the history of changes) online
+- basic workflow: 
+    - "pull" the most current version of a repository, so that your local version of the repository is up to date with the online ("remote") version
+    - make changes to local files, save those changes in the local repository with "commit" messages that describe the changes you've made
+    - when you're done working for now, "push" your local changes to the remote repository
+  
+#### 3. Software components of a git workflow
+- git software downloaded on your computer
+- an account w/ an online git host such as gitHub (or gitLab, bitBucket, etc.) 
+    - free accounts are adequate for most folks' uses
+- git client software downloaded on your computer
+    - not technically required (you can interface with git entirely through the command line)
+    - makes interfacing with git much easier
+    - R studio has a built-in git client, which I'll describe later
+    - other options include GitKraken, sourcetree, etc.
+    
+Now have a break for everyone to get git set up on their computer (download git, make a gitHub account if they don't already have one, make sure they have R studio downloaded)
+
+
+#### 4. Setting up credentials so your computer, your git client, and gitHub can talk to each other easily
+- using https vs. ssh keys (you need to have some sort of credential to let gitHub know what you're you!)
+- start w/ using https personal access tokens
+  - create a token in gitHub
+  - store it in R studio
+- make sure that everyone has this set up and working
+
+#### 5. Make a repository! 
+- make a repository on GitHub (can be just a 'test', or for something real)
+- clone the repo to your local drive using R studio
+- make a local change and commit it (talk about the "rock climber analogy" for commits that Jenny Bryant give in happy git with R)
+- make another change
+- decide I don't like that change! Show how to revert to the last commit 
+- make a different change, then commit it. 
+- push to the remote repository
+- go to gitHub and see your changes! 
+
+#### 6. Next steps
+- branches and pull requests
+- using git on a project with multiple people 
+  -best practices (forking a repo, working on a branch on that fork, etc.)
+
+
+
+        
+
+ 
