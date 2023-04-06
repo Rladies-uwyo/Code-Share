@@ -1,0 +1,50 @@
+---
+title: "git, GitHub and R Studio"
+subtitle: "UW R-Ladies"
+date: "14 April 2023"
+format: 
+  revealjs: 
+    theme: solarized
+editor: visual
+---
+
+### What is 'Version Control?'
+
+::: columns
+::: {.column width="50%"}
+::: fragment
+-   A system to keep track of changes you make to a file, and revert to a previous version if something goes wrong
+:::
+
+::: fragment
+-   each of these 'save points' is called a "commit"
+:::
+:::
+
+::: {.column width="50%"}
+::: fragment
+[![](climbingImage.png){fig-alt="Climber on a wall" width="250"}](https://www.vdiffclimbing.com/trad-gear/)
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column width="65%"}
+![](falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}
+:::
+
+::: {.column width="35%"}
+[![](soloing.jpg)](https://www.vectorstock.com/royalty-free-vector/young-wall-climber-icon-cartoon-style-vector-26344515)
+:::
+:::
+
+------------------------------------------------------------------------
+
+-   why would a person want to use version control?
+    -   keep track of changes for yourself, esp. across multiple computers
+    -   keep track of and share changes on collaborative projects
+-   version control is typically used for code (*not* data), but can also be used for writing, presentations, etc.
+
+### Why would you use version control?
