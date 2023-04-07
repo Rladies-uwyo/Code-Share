@@ -32,11 +32,13 @@ editor: visual
 
 ::: columns
 ::: {.column width="65%"}
-![](falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}
+[![](falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}](https://www.vdiffclimbing.com/trad-gear/) 
 :::
 
 ::: {.column width="35%"}
-[![](soloing.jpg)](https://www.vectorstock.com/royalty-free-vector/young-wall-climber-icon-cartoon-style-vector-26344515)
+::: fragment
+[![](soloing.jpg)](https://www.redbull.com/al-sq/theredbulletin/marc-andre-leclerc-the-alpinist)
+:::
 :::
 :::
 
