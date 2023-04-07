@@ -44,7 +44,7 @@ editor: visual
 
 ------------------------------------------------------------------------
 
-### How do I use version control?
+### How do you use version control?
 
 ![](presentationImgs/git_logo.png){width="116" height="48"} one of the most common version control software programs, and is *free and open source*!
 
@@ -60,7 +60,7 @@ editor: visual
 :::
 
 ::: fragment
-* git does not track changes automatically. You need to make commits using the **command line** or a **git client**
+* git does not track changes automatically. You need to make commits using the **command line** or a **git client** GUI
 
 :::
 
@@ -70,11 +70,35 @@ editor: visual
 
 ------------------------------------------------------------------------
 
-- You can use git to track changes on your local files without ever connecting to a git service like GitHub! (although most people don't do this...)
+![](presentationImgs/github-mark.png){width="80"} git becomes even more useful when you connect your **local** git repos to a **remote** git service such as GitHub
 
-![](presentationImgs/github-mark.png){width="100"} git becomes even more useful when you connect your "local" git repositories (on your computer) to a "remote" (online) service such as GitHub
+::: fragment
+- A **remote** version of your repo is saved online, which is a great backup! 
+:::
 
+::: fragment
+- If you have internet, you have access to your most up-to-date repo -- really easy to work across different computers!
+:::
 
+::: fragment 
+- easy to share code--just send people to your GitHub repo for the most current version! 
+:::
+
+------------------------------
+
+### What does a git/GitHub workflow look like? 
+::: fragment
+- When you begin work for the day, you **pull** from the remote repo to make sure your **local** version is up to date
+:::
+
+::: fragment
+- Make commits in the **local** repo as you work
+  - can use the command line or a git client (e.g. GitKraken or Sourcetree), but you can also use R Studio!
+:::
+
+::: fragment
+- At the end of the day, **push** to the **remote** repo, which sends your changes (and the git record of your commits) online
+:::
 
 
 ------------------------------------------------------------------------
