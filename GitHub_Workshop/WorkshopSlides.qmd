@@ -23,7 +23,7 @@ editor: visual
 
 ::: {.column width="50%"}
 ::: fragment
-[![](climbingImage.png){fig-alt="Climber on a wall" width="250"}](https://www.vdiffclimbing.com/trad-gear/)
+[![](presentationImgs/climbingImage.png){fig-alt="Climber on a wall" width="200"}](https://www.vdiffclimbing.com/trad-gear/)
 :::
 :::
 :::
@@ -31,16 +31,59 @@ editor: visual
 ------------------------------------------------------------------------
 
 ::: columns
-::: {.column width="65%"}
-[![](falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}](https://www.vdiffclimbing.com/trad-gear/) 
+::: {.column width="60%"}
+[![](presentationImgs/falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}](https://www.vdiffclimbing.com/trad-gear/)
 :::
 
-::: {.column width="35%"}
+::: {.column width="40%"}
 ::: fragment
-[![](soloing.jpg)](https://www.redbull.com/al-sq/theredbulletin/marc-andre-leclerc-the-alpinist)
+[![](presentationImgs/soloing.jpg)](https://www.redbull.com/al-sq/theredbulletin/marc-andre-leclerc-the-alpinist)
 :::
 :::
 :::
+
+------------------------------------------------------------------------
+
+### How do I use version control?
+
+![](presentationImgs/git_logo.png){width="116" height="48"} one of the most common version control software programs, and is *free and open source*!
+
+::: fragment
+:::columns
+::: {.column width="40%"}
+- git adds a ".git" folder to a **repository** and records your commits/adds there
+:::
+::: {.column width="60%"}
+![](presentationImgs/gitRepoImage.png){width="500"}
+:::
+:::
+:::
+
+::: fragment
+* git does not track changes automatically. You need to make commits using the **command line** or a **git client**
+
+:::
+
+------------------------------------------------------------------------
+
+![](presentationImgs/gitTree.png){width="500"}
+
+------------------------------------------------------------------------
+
+- You can use git to track changes on your local files without ever connecting to a git service like GitHub! (although most people don't do this...)
+
+![](presentationImgs/github-mark.png){width="100"} git becomes even more useful when you connect your "local" git repositories (on your computer) to a "remote" (online) service such as GitHub
+
+
+
+
+------------------------------------------------------------------------
+
+### When would you use version control?
+
+-   to keep track of changes that *you* make in your files
+    -   you have a record of when and why you made changes to a file
+    -   you can revert to a previous version of a file quite easily! (and if you have informative commit messages, it's easy to find the version you need!)
 
 ------------------------------------------------------------------------
 
@@ -48,5 +91,3 @@ editor: visual
     -   keep track of changes for yourself, esp. across multiple computers
     -   keep track of and share changes on collaborative projects
 -   version control is typically used for code (*not* data), but can also be used for writing, presentations, etc.
-
-### Why would you use version control?
