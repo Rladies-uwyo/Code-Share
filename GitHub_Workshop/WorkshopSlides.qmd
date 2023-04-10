@@ -5,19 +5,24 @@ date: "14 April 2023"
 format: 
   revealjs: 
     theme: solarized
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
 editor: visual
+execute:
+  echo: true
 ---
 
 ### What is 'Version Control?'
 
 ::: columns
 ::: {.column width="50%"}
-::: fragment
+::: incremental
 -   A system to keep track of changes you make to a file, and revert to a previous version if something goes wrong
-:::
 
-::: fragment
--   each of these 'save points' is called a "commit"
+-   Changes are recorded and documented in a "commit"
+
+-   The record of commits is version control!
 :::
 :::
 
@@ -44,6 +49,14 @@ editor: visual
 
 ------------------------------------------------------------------------
 
+## When would you use version control?
+::: incremental
+-   to keep track of changes that *you* make in your files
+    -   you have a record of when and why you made changes to a file
+    -   you can revert to a previous version of a file quite easily! (and if you have informative commit messages, it's easy to find the version you need!)    
+-  to have a record of changes that *multiple people* make to files on a shared project
+::: 
+
 ## How do you use version control?
 
 ![](presentationImgs/git_logo.png){width="116" height="48"} one of the most common version control software programs, and is *free and open source*!
@@ -64,57 +77,96 @@ editor: visual
 -   git does not track changes automatically. You need to make commits using the **command line** or a **git client** GUI
 :::
 
-##
+## 
+
 ![](presentationImgs/gitTree.png){width="500"}
 
-
 ## 
+
 ![](presentationImgs/github-mark.png){width="80"} git becomes even more useful when you connect your **local** git repos to a **remote** git service such as GitHub
 
 ::: incremental
 -   A **remote** version of your repo is saved online, which is a great backup!
--  Really easy to work across different computers!
+-   Really easy to work across different computers!
 -   Open Science/Code sharing!
 :::
 
-## What does a git/GitHub workflow look like?
+## What does a Basic git/GitHub workflow look like?
 
 ::: fragment
--   When you begin work for the day, you **pull** from the remote repo to make sure your **local** version is up to date
+::: {.column width="80%"}
+-   When you begin work for the day, you **pull** from the **remote** repo to make sure your **local** version is up to date
 :::
-
+![](presentationImgs/repo_beforePull.png){.absolute bottom=100 left=900 width="250"}
+:::
+:::fragment
+![](presentationImgs/repo_pull.png){.absolute bottom=100 left=900 width="250"}
+:::
 ::: fragment
+::: {.column width="80%"}
 -   Make commits in the **local** repo as you work
-    -   can use the command line or a git client (e.g. GitKraken or Sourcetree), but you can also use R Studio!
-:::
+    -   can use the command line or a git client (including R Studio)!
 
+:::
+![](presentationImgs/repo_commits.png){.absolute bottom=100 left=900 width="250"}
+
+:::
 ::: fragment
+::: {.column width="80%"}
 -   At the end of the day, **push** to the **remote** repo, which sends your changes (and the git record of your commits) online
 :::
+![](presentationImgs/repo_push.png){.absolute bottom=100 left=900 width="250"}
+::: 
 
-## Important Random Info {.smaller}
 
-::: incremental 
+## Important Miscellaneous Info {.smaller}
 
+::: incremental
 -   All your repos are public on the free version of GitHub. People won't be able to push or pull without your permission, but they will be able to see your code!
 -   git is typically used for code, but can work for other files too! (Word, Overleaf, etc.)
 -   Don't store data in git repos
     -   takes up a lot of room (there are size limits on GitHub)
 
     -   you typically aren't changing raw data (hopefully!), so it's not really useful
-    
-    -    you can still store data in a repo, but put it in a folder that included in the ".gitignore"
+
+    -   you can still store data in a repo, but put it in a folder that included in the ".gitignore"
+
 :::
 
-## When would you use version control?
+## Let's get started! 
+### Goals: 
 
--   to keep track of changes that *you* make in your files
-    -   you have a record of when and why you made changes to a file
-    -   you can revert to a previous version of a file quite easily! (and if you have informative commit messages, it's easy to find the version you need!)
+::: incremental
+1. Make sure that git, R and R Studio are downloaded on your machine, and that you have a free GitHub account. 
+2. Establish a connection between your computer and GitHub
+3. Make a repository! 
+4. Practice pulling, commiting, and pushing       
+Note: All of these steps are very well explained on Jenny Bryan's amazing website, happygitwithr.com
+::: 
+
+## Introduce yourself to git via R Studio
+ We'll edit the git "config file" on your computer, so the git software on your computer knows how to communicate with GitHub 
+       
+- You can use the command line...       
+- or you can use the "usethis" package in R Studio
+```{r}
+#| eval: false
+install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "R Lady", # your GitHub username!
+               user.email = "lady@Rladies.org" # GitHub account email!
+               )
+```
+
+
+
 
 <!-- ------------------------------------------------------------------------ -->
 
 <!-- -   why would a person want to use version control? -->
+
 <!--     -   keep track of changes for yourself, esp. across multiple computers -->
+
 <!--     -   keep track of and share changes on collaborative projects -->
+
 <!-- -   version control is typically used for code (*not* data), but can also be used for writing, presentations, etc. -->
