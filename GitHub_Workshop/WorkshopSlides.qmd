@@ -138,15 +138,26 @@ execute:
 
 ::: incremental
 1. Make sure that git, R and R Studio are downloaded on your machine, and that you have a free GitHub account. 
-2. Establish a connection between your computer and GitHub
+2. Establish a connection between your computer, GitHub and R Studio
 3. Make a repository! 
-4. Practice pulling, commiting, and pushing       
+4. Practice pulling, committing, and pushing   
+
 Note: All of these steps are very well explained on Jenny Bryan's amazing website, happygitwithr.com
 ::: 
 
-## Introduce yourself to git via R Studio
- We'll edit the git "config file" on your computer, so the git software on your computer knows how to communicate with GitHub 
-       
+## Introduce git and GitHub to each other
+There are two formats git and git servers can use to communicate with each other, **HTTPS** or **SSH**. Each require two elements for authentication: 
+
+  * HTTPS: GitHub username + Personal Access Token
+  * SSH: Private SSH key on your computer and it's public counterpart on GitHub
+
+::: fragment
+You can store these access credentials in your local git .config file, but you need to decide on SSH or HTTPS first. We'll use HTTPS because it's easier to set up (you can easily switch to SSH later!). 
+:::
+
+## 
+### First, we'll store your GitHub username information
+
 - You can use the command line...       
 - or you can use the "usethis" package in R Studio
 ```{r}
@@ -158,15 +169,88 @@ use_git_config(user.name = "R Lady", # your GitHub username!
                )
 ```
 
+##
+### Next, we'll generate and store a Personal Access Token (PAT)
+PATs are the style of authentication key that HTTPs uses
+
+* Use the `usethis::create_github_token()` function in R to generate a PAT -this will take you to the GitHub PAT website
+* Give the token a name -- you can use the same PAT for everything, or you can set up one for each computer. If you do this, give the token an informative name 
+* Select the expiration date (up to you) and the "scopes" (the actions the token can authenticate)
+* Click "generate token"    
 
 
+## Don't navigate away from the next page! 
+We need to store the PAT in your local config file, and you won't be able to see it again once you leave this page! 
 
-<!-- ------------------------------------------------------------------------ -->
+* We'll use the `gitcreds` R package to store this PAT in your config file
+* run the function `gitcreds::gitcreds_set()` in the R console
+* The prompt `? Enter password or token:` will appear. Copy the PAT from the GitHub page, and paste it into the R console and press enter.
 
-<!-- -   why would a person want to use version control? -->
+## Now we'll make sure that R Studio can find git
 
-<!--     -   keep track of changes for yourself, esp. across multiple computers -->
+1. Open up R Studio
+2. Go to "Tools" > "Global Options" > "Git/SVN"
+3. Make sure the "Enable version control..." box is checked, and close that panel by clicking "Apply"
+4. Go to "File" > "New Project..". Is there a "Version Control" options? If there is, great! If not, follow the instructions here: [https://happygitwithr.com/rstudio-see-git.html](https://happygitwithr.com/rstudio-see-git.html){target="_blank"}
+  
+## Now we can make a git repository, and push and pull from GitHub!
 
-<!--     -   keep track of and share changes on collaborative projects -->
+1. Go to [https://github.com](https://github.com){target="_blank"} and login
+2. On the left panel, next to "Top Repositories," click the "New" button
+3. Name your new repo, and (optionally) add a Description and check the "Add a README file" box. Then click the "Create Repository" button at the bottom of the page! Don't navigate away from this page...
 
-<!-- -   version control is typically used for code (*not* data), but can also be used for writing, presentations, etc. -->
+## Now we'll "clone" the repo from GitHub to your local computer
+
+1. In R Studio, go to "File" > "New Project..." > "Version Control" > "Git"      
+ 
+::: columns
+::: {.column width="50%"}
+2. On the GitHub page for the repo you just created, click the green "< > Code" button, and copy the URL 
+::: 
+
+::: {.column width="50%"}
+![](presentationImgs/RepoClone.png){width="400"}
+:::
+:::
+
+##
+::: columns
+::: {.column width="20%"}
+
+4. Back in R Studio...    
+::: 
+::: {.column width="80%"}
+
+![](presentationImgs/NewProject.jpg){width="700"}    
+:::
+:::
+5. Now, look in the folder where you put the repo... it should be there!
+
+## Now we can start editing our git repo!        
+\small(Note: We normally would begin by **pulling** from the remote, but that wouldn't do anything here because we just cloned the repo)
+
+7. Back in the R Studio window, **create a new file**, **add some code**, and **save**.
+In the panel where the environment is, select the "git" tab. Every time you save changes to a file in the repo, the file name will show up here
+![](presentationImgs/CommitButton_RStudio.png){width="700"} 
+
+## 
+::: columns 
+::: {.column width="50%"}
+ 
+8. Once you've made some changes and are ready to commit, click on the "Commit" button 
+:::
+::: {.column width="50%"}
+
+![](presentationImgs/RStudio_GitPanel.png){width="600"}
+
+:::
+::: 
+Fill in the panel that pops up to make a commit
+![](presentationImgs/CommitPanel.png)
+
+##
+9. Now, practice by making and committing another change to the original file.        
+
+::: incremental         
+10. Oh no! You actually don't want to keep the changes that you just committed-- You want to convert the file back to the way it was at the previous commit! 
+::: 
