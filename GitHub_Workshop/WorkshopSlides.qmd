@@ -8,6 +8,7 @@ format:
     chalkboard: true
     slide-number: true
     show-slide-number: all
+    #embed-resources: true
 editor: visual
 execute:
   echo: true
@@ -246,7 +247,7 @@ We need to store the PAT in your local config file, and you won't be able to see
 
 ::: columns
 ::: {.column width="50%"}
-8. Once you've made some changes and are ready to commit, click on the "Commit" button
+8.  Once you've made some changes and are ready to commit, click on the "Commit" button
 :::
 
 ::: {.column width="50%"}
@@ -261,87 +262,103 @@ Fill in the panel that pops up to make a commit ![](presentationImgs/CommitPanel
 9.  Now, practice by making and committing another change to the original file.
 
 ::: fragment
-10. Oh no! You actually don't want to keep the changes that you just committed-- You want to convert the file back to the way it was at the previous commit! 
-  *  There are several ways to do this, but we'll do a "revert"
-  *  We need to use a bash shell for this, but don't worry! It's easy, and we can do it inside of R Studio!
+10. Oh no! You actually don't want to keep the changes that you just committed-- You want to convert the file back to the way it was at the previous commit!
+
+-   There are several ways to do this, but we'll do a "revert"
+-   We need to use a bash shell for this, but don't worry! It's easy, and we can do it inside of R Studio!
 :::
 
-##        
-11. Open a new terminal window from inside of R studio
-![](presentationImgs/NewTerminal_RStudio.png){width="700"}                       
-12. In the Terminal window that opens, use: 
+## 
+
+11. Open a new terminal window from inside of R studio ![](presentationImgs/NewTerminal_RStudio.png){width="700"}\
+12. In the Terminal window that opens, use:
+
 ```{shell}
 git status
-``` 
-This checks if there uncommitted changes. If the terminal says anything *other* than `nothing to commit, working tree clean,` commit your changes.                
+```
+
+This checks if there uncommitted changes. If the terminal says anything *other* than `nothing to commit, working tree clean,` commit your changes.\
 13. Then, look at the most recent commits in this repo:
+
 ```{shell}
 git log --pretty HEAD~3..HEAD
 ```
 
-
 ## 
-14. You can also do this via the R Studio git client... Click the "diff" button in the "Git" panel, and then the "History" button in the upper left corner. Click on a commit to see the changed files below.        
-15. Whichever method you chose, copy the "SHA" of the commit you want to revert to        
-![](presentationImgs/SHA_RStudio.png){width="500"}
-![](presentationImgs/SHA_terminal.png){width="500"}
 
-14. In the Terminal window, use the git revert command to take your repository back to the commit you've chosen
+14. You can also do this via the R Studio git client... Click the "diff" button in the "Git" panel, and then the "History" button in the upper left corner. Click on a commit to see the changed files below.\
+
+15. Whichever method you chose, copy the "SHA" of the commit you want to revert to\
+    ![](presentationImgs/SHA_RStudio.png){width="500"} ![](presentationImgs/SHA_terminal.png){width="500"}
+
+16. In the Terminal window, use the git revert command to take your repository back to the commit you've chosen
+
 ```{shell}
 git revert YourCommitsSHAnumber
 ```
-##
-15. Oh no, an error! There is a **merge conflict**, which means that file(s) in your local repo don't match the file(s) in the commit you're reverting to. We need to resolve the merge manually.             
-16. The merge conflict message in the Terminal will tell you which file contains the merge conflict(s). Open up that file in the R Studio editor. There will be a segment of the file that looks like this:            
-![](presentationImgs/MergeConflict.png){width="700"}
-
-##        
-![](presentationImgs/MergeConflict.png){width="700"}
-
-**"<<<" and ">>>"**: make the beginning and end of the merge conflict        
-**"==="**: divides the two conflicting versions
-
-17. Now, decide which version you want to keep. Delete the other version (above or below the "==="), as well as everything in the lines with the "</>". Commit your changes, then push them! 
-
-## Going back to a previous version the lazy (but sometimes easier) way!
-* One of the great things about using GitHub or other remotes for git repositories is that they offer a great GUI for looking at past versions of your files
-* GitHub also has URLs for every past version of a repo so you can share past versions easily!
-* We can take advantage of this to revert to a previous version of a file
-
-##        
-::: columns       
-::: {.column width="60%"}
-18. Head to your online GitHub repo, and click on the name of the file that you want to in revert. 
-19. Then click the "history" button     
-:::         
-::: {.column width="40%"}
-
-![](presentationImgs/HistoryButton.png){width="400"}   
-:::    
-:::       
-20. Then, click on a commit to see the version of the file at that time. Then you'll see the file versions before and after the commit        
-![](presentationImgs/DiffExample.png){width="700"}  
-
-## Now for the non-Git-nerd part...
-* Once you've found the commit with the version of the file you want, **copy the code from that page (everything, or just what you want to change)** and **paste it into that file in R Studio.** 
-
-* Then, make a commit with an informative message! 
-
-* This isn't necessarily the most *by the book* way of doing things, but sometimes it's a lot easier than doing a git revert! 
 
 ## 
-### Topics for next steps 
-* [Setting up an existing project as a repo](https://happygitwithr.com/existing-github-first.html#existing-github-first){target="_blank"}
-* [Branches and pull requests](https://happygitwithr.com/git-branches.html){target="_blank"}
-* [Forking and cloning repos someone else created](https://happygitwithr.com/fork-and-clone.html){target="_blank"}
+
+15. Oh no, an error! There is a **merge conflict**, which means that file(s) in your local repo don't match the file(s) in the commit you're reverting to. We need to resolve the merge manually.\
+16. The merge conflict message in the Terminal will tell you which file contains the merge conflict(s). Open up that file in the R Studio editor. There will be a segment of the file that looks like this:\
+    ![](presentationImgs/MergeConflict.png){width="700"}
+
+## 
+
+![](presentationImgs/MergeConflict.png){width="700"}
+
+**"\<\<\<" and "\>\>\>"**: make the beginning and end of the merge conflict\
+**"==="**: divides the two conflicting versions
+
+17. Now, decide which version you want to keep. Delete the other version (above or below the "==="), as well as everything in the lines with the "\</\>". Commit your changes, then push them!
+
+## Going back to a previous version the lazy (but sometimes easier) way!
+
+-   One of the great things about using GitHub or other remotes for git repositories is that they offer a great GUI for looking at past versions of your files
+-   GitHub also has URLs for every past version of a repo so you can share past versions easily!
+-   We can take advantage of this to revert to a previous version of a file
+
+## 
+
+::: columns
+::: {.column width="60%"}
+18. Head to your online GitHub repo, and click on the name of the file that you want to in revert.
+19. Then click the "history" button\
+:::
+
+::: {.column width="40%"}
+![](presentationImgs/HistoryButton.png){width="400"}
+:::
+:::
+
+20. Then, click on a commit to see the version of the file at that time. Then you'll see the file versions before and after the commit\
+    ![](presentationImgs/DiffExample.png){width="700"}
+
+## Now for the non-Git-nerd part...
+
+-   Once you've found the commit with the version of the file you want, **copy the code from that page (everything, or just what you want to change)** and **paste it into that file in R Studio.**
+
+-   Then, make a commit with an informative message!
+
+-   This isn't necessarily the most *by the book* way of doing things, but sometimes it's a lot easier than doing a git revert!
+
+## 
+
+### Topics for next steps
+
+-   [Setting up an existing project as a repo](https://happygitwithr.com/existing-github-first.html#existing-github-first){target="_blank"}
+-   [Branches and pull requests](https://happygitwithr.com/git-branches.html){target="_blank"}
+-   [Forking and cloning repos someone else created](https://happygitwithr.com/fork-and-clone.html){target="_blank"}
 
 ### Resources, futher reading
-* A Git game! [https://ohmygit.org/](https://ohmygit.org/){target="_blank"}
-* Happy Git With R by Jenny Bryan is an amazing resource
-    * [Basic workflows](https://happygitwithr.com/usage-intro.html){target="_blank"}
-    * [What to do if things get really messed up](https://happygitwithr.com/burn.html){target="_blank"}
-    
+
+-   A Git game! [https://ohmygit.org/](https://ohmygit.org/){target="_blank"}
+-   Happy Git With R by Jenny Bryan is an amazing resource
+    -   [Basic workflows](https://happygitwithr.com/usage-intro.html){target="_blank"}
+    -   [What to do if things get really messed up](https://happygitwithr.com/burn.html){target="_blank"}
+
 ## Take Aways
- Don't be afraid to mess up! Just like with R, there are a ton of online resources about git and GitHub, and I've always been able to solve problems I've run into by Googling an error message!        
- 
-### You can do it! 
+
+Don't be afraid to mess up! Just like with R, there are a ton of online resources about git and GitHub, and I've always been able to solve problems I've run into by Googling an error message!
+
+### You can do it!
