@@ -1,0 +1,4 @@
+- source: WorkshopSlides.qmd
+  quarto-pub:
+    - id: 858d6432-b197-4b72-a918-630751d7d3fe
+      url: 'https://quartopub.com/sites/aestears/git-github-and-r-studio'

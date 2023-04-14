@@ -1,0 +1,364 @@
+---
+title: "git, GitHub and R Studio"
+subtitle: "UW R-Ladies"
+date: "14 April 2023"
+format: 
+  revealjs: 
+    theme: solarized
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    # embed-resources: true
+editor: visual
+execute:
+  echo: true
+---
+
+### What is 'Version Control?'
+
+::: columns
+::: {.column width="50%"}
+::: incremental
+-   A system to keep track of changes you make to a file, and revert to a previous version if something goes wrong
+
+-   Changes are recorded and documented in a "commit"
+
+-   The record of commits is version control!
+:::
+:::
+
+::: {.column width="50%"}
+::: fragment
+[![](presentationImgs/climbingImage.png){fig-alt="Climber on a wall" width="200"}](https://www.vdiffclimbing.com/trad-gear/)
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column width="60%"}
+[![](presentationImgs/falling.png){fig-alt="Climbers falling on a wall" fig-align="left" width="592"}](https://www.vdiffclimbing.com/trad-gear/)
+:::
+
+::: {.column width="40%"}
+::: fragment
+[![](presentationImgs/soloing.jpg)](https://www.redbull.com/al-sq/theredbulletin/marc-andre-leclerc-the-alpinist)
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+## When would you use version control?
+
+::: incremental
+-   to keep track of changes that *you* make in your files
+    -   you have a record of when and why you made changes to a file
+    -   you can revert to a previous version of a file quite easily! (and if you have informative commit messages, it's easy to find the version you need!)\
+-   to have a record of changes that *multiple people* make to files on a shared project
+:::
+
+## How do you use version control?
+
+![](presentationImgs/git_logo.png){width="116" height="48"} one of the most common version control software programs, and is *free and open source*!
+
+::: fragment
+::: columns
+::: {.column width="40%"}
+-   git adds a ".git" folder to a **repository** and records your commits/adds there
+:::
+
+::: {.column width="60%"}
+![](presentationImgs/gitRepoImage.png){width="500"}
+:::
+:::
+:::
+
+::: fragment
+-   git does not track changes automatically. You need to make commits using the **command line** or a **git client** GUI
+:::
+
+## 
+
+![](presentationImgs/gitTree.png){width="500"}
+
+## 
+
+![](presentationImgs/github-mark.png){width="80"} git becomes even more useful when you connect your **local** git repos to a **remote** git service such as GitHub
+
+::: incremental
+-   A **remote** version of your repo is saved online, which is a great backup!
+-   Really easy to work across different computers!
+-   Open Science/Code sharing!
+:::
+
+## What does a Basic git/GitHub workflow look like?
+
+::: fragment
+::: {.column width="80%"}
+-   When you begin work for the day, you **pull** from the **remote** repo to make sure your **local** version is up to date
+:::
+
+![](presentationImgs/repo_beforePull.png){.absolute bottom="100" left="900" width="250"}
+:::
+
+::: fragment
+![](presentationImgs/repo_pull.png){.absolute bottom="100" left="900" width="250"}
+:::
+
+::: fragment
+::: {.column width="80%"}
+-   Make commits in the **local** repo as you work
+    -   can use the command line or a git client (including R Studio)!
+:::
+
+![](presentationImgs/repo_commits.png){.absolute bottom="100" left="900" width="250"}
+:::
+
+::: fragment
+::: {.column width="80%"}
+-   At the end of the day, **push** to the **remote** repo, which sends your changes (and the git record of your commits) online
+:::
+
+![](presentationImgs/repo_push.png){.absolute bottom="100" left="900" width="250"}
+:::
+
+## Important Miscellaneous Info {.smaller}
+
+::: incremental
+-   All your repos are public on the free version of GitHub. People won't be able to push or pull without your permission, but they will be able to see your code!
+-   git is typically used for code, but can work for other files too! (Word, Overleaf, etc.)
+-   Don't store data in git repos
+    -   takes up a lot of room (there are size limits on GitHub)
+
+    -   you typically aren't changing raw data (hopefully!), so it's not really useful
+
+    -   you can still store data in a repo, but put it in a folder that included in the ".gitignore"
+:::
+
+## Let's get started!
+
+### Goals:
+
+::: incremental
+1.  Make sure that git, R and R Studio are downloaded on your machine, and that you have a free GitHub account.
+2.  Establish a connection between your computer, GitHub and R Studio
+3.  Make a repository!
+4.  Practice pulling, committing, and pushing
+
+Note: All of these steps are very well explained on Jenny Bryan's amazing website, happygitwithr.com
+:::
+
+## Introduce git and GitHub to each other
+
+There are two formats git and git servers can use to communicate with each other, **HTTPS** or **SSH**. Each require two elements for authentication:
+
+-   HTTPS: GitHub username + Personal Access Token
+-   SSH: Private SSH key on your computer and it's public counterpart on GitHub
+
+::: fragment
+You can store these access credentials in your local git .config file, but you need to decide on SSH or HTTPS first. We'll use HTTPS because it's easier to set up (you can easily switch to SSH later!).
+:::
+
+## 
+
+### First, we'll store your GitHub username information
+
+-   You can use the command line...\
+-   or you can use the "usethis" package in R Studio
+
+```{r}
+#| eval: false
+install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "R Lady", # your GitHub username!
+               user.email = "lady@Rladies.org" # GitHub account email!
+               )
+```
+
+## 
+
+### Next, we'll generate and store a Personal Access Token (PAT)
+
+PATs are the style of authentication key that HTTPs uses
+
+-   Use the `usethis::create_github_token()` function in R to generate a PAT -this will take you to the GitHub PAT website
+-   Give the token a name -- you can use the same PAT for everything, or you can set up one for each computer. If you do this, give the token an informative name
+-   Select the expiration date (up to you) and the "scopes" (the actions the token can authenticate)
+-   Click "generate token"
+
+## Don't navigate away from the next page!
+
+We need to store the PAT in your local config file, and you won't be able to see it again once you leave this page!
+
+-   We'll use the `gitcreds` R package to store this PAT in your config file
+-   run the function `gitcreds::gitcreds_set()` in the R console
+-   The prompt `? Enter password or token:` will appear. Copy the PAT from the GitHub page, and paste it into the R console and press enter.
+
+## Now we'll make sure that R Studio can find git
+
+1.  Open up R Studio
+2.  Go to "Tools" \> "Global Options" \> "Git/SVN"
+3.  Make sure the "Enable version control..." box is checked, and close that panel by clicking "Apply"
+4.  Go to "File" \> "New Project..". Is there a "Version Control" options? If there is, great! If not, follow the instructions here: [https://happygitwithr.com/rstudio-see-git.html](https://happygitwithr.com/rstudio-see-git.html){target="_blank"}
+
+## Now we can make a git repository, and push and pull from GitHub!
+
+1.  Go to [https://github.com](https://github.com){target="_blank"} and login
+2.  On the left panel, next to "Top Repositories," click the "New" button
+3.  Name your new repo, and (optionally) add a Description and check the "Add a README file" box. Then click the "Create Repository" button at the bottom of the page! Don't navigate away from this page...
+
+## Now we'll "clone" the repo from GitHub to your local computer
+
+1.  In R Studio, go to "File" \> "New Project..." \> "Version Control" \> "Git"
+
+::: columns
+::: {.column width="50%"}
+2.  On the GitHub page for the repo you just created, click the green "\< \> Code" button, and copy the URL
+:::
+
+::: {.column width="50%"}
+![](presentationImgs/RepoClone.png){width="400"}
+:::
+:::
+
+## 
+
+::: columns
+::: {.column width="20%"}
+4.  Back in R Studio...\
+:::
+
+::: {.column width="80%"}
+![](presentationImgs/NewProject.jpg){width="700"}
+:::
+:::
+
+5.  Now, look in the folder where you put the repo... it should be there!
+
+## Now we can start editing our git repo!
+
+\small(Note: We normally would begin by **pulling** from the remote, but that wouldn't do anything here because we just cloned the repo)
+
+7.  Back in the R Studio window, **create a new file**, **add some code**, and **save**. In the panel where the environment is, select the "git" tab. Every time you save changes to a file in the repo, the file name will show up here ![](presentationImgs/CommitButton_RStudio.png){width="700"}
+
+## 
+
+::: columns
+::: {.column width="50%"}
+8.  Once you've made some changes and are ready to commit, click on the "Commit" button
+:::
+
+::: {.column width="50%"}
+![](presentationImgs/RStudio_GitPanel.png){width="600"}
+:::
+:::
+
+Fill in the panel that pops up to make a commit ![](presentationImgs/CommitPanel.png)
+
+## 
+
+9.  Now, practice by making and committing another change to the original file.
+
+::: fragment
+10. Oh no! You actually don't want to keep the changes that you just committed-- You want to convert the file back to the way it was at the previous commit!
+
+-   There are several ways to do this, but we'll do a "revert"
+-   We need to use a bash shell for this, but don't worry! It's easy, and we can do it inside of R Studio!
+:::
+
+## 
+
+11. Open a new terminal window from inside of R studio ![](presentationImgs/NewTerminal_RStudio.png){width="700"}\
+12. In the Terminal window that opens, use:
+
+```{shell}
+git status
+```
+
+This checks if there uncommitted changes. If the terminal says anything *other* than `nothing to commit, working tree clean,` commit your changes.\
+13. Then, look at the most recent commits in this repo:
+
+```{shell}
+git log --pretty HEAD~3..HEAD
+```
+
+## 
+
+14. You can also do this via the R Studio git client... Click the "diff" button in the "Git" panel, and then the "History" button in the upper left corner. Click on a commit to see the changed files below.\
+
+15. Whichever method you chose, copy the "SHA" of the commit you want to revert to\
+    ![](presentationImgs/SHA_RStudio.png){width="500"} ![](presentationImgs/SHA_terminal.png){width="500"}
+
+16. In the Terminal window, use the git revert command to take your repository back to the commit you've chosen
+
+```{shell}
+git revert YourCommitsSHAnumber
+```
+
+## 
+
+15. Oh no, an error! There is a **merge conflict**, which means that file(s) in your local repo don't match the file(s) in the commit you're reverting to. We need to resolve the merge manually.\
+16. The merge conflict message in the Terminal will tell you which file contains the merge conflict(s). Open up that file in the R Studio editor. There will be a segment of the file that looks like this:\
+    ![](presentationImgs/MergeConflict.png){width="700"}
+
+## 
+
+![](presentationImgs/MergeConflict.png){width="700"}
+
+**"\<\<\<" and "\>\>\>"**: make the beginning and end of the merge conflict\
+**"==="**: divides the two conflicting versions
+
+17. Now, decide which version you want to keep. Delete the other version (above or below the "==="), as well as everything in the lines with the "\</\>". Commit your changes, then push them!
+
+## Going back to a previous version the lazy (but sometimes easier) way!
+
+-   One of the great things about using GitHub or other remotes for git repositories is that they offer a great GUI for looking at past versions of your files
+-   GitHub also has URLs for every past version of a repo so you can share past versions easily!
+-   We can take advantage of this to revert to a previous version of a file
+
+## 
+
+::: columns
+::: {.column width="60%"}
+18. Head to your online GitHub repo, and click on the name of the file that you want to in revert.
+19. Then click the "history" button\
+:::
+
+::: {.column width="40%"}
+![](presentationImgs/HistoryButton.png){width="400"}
+:::
+:::
+
+20. Then, click on a commit to see the version of the file at that time. Then you'll see the file versions before and after the commit\
+    ![](presentationImgs/DiffExample.png){width="700"}
+
+## Now for the non-Git-nerd part...
+
+-   Once you've found the commit with the version of the file you want, **copy the code from that page (everything, or just what you want to change)** and **paste it into that file in R Studio.**
+
+-   Then, make a commit with an informative message!
+
+-   This isn't necessarily the most *by the book* way of doing things, but sometimes it's a lot easier than doing a git revert!
+
+## 
+
+### Topics for next steps
+
+-   [Setting up an existing project as a repo](https://happygitwithr.com/existing-github-first.html#existing-github-first){target="_blank"}
+-   [Branches and pull requests](https://happygitwithr.com/git-branches.html){target="_blank"}
+-   [Forking and cloning repos someone else created](https://happygitwithr.com/fork-and-clone.html){target="_blank"}
+
+### Resources, futher reading
+
+-   A Git game! [https://ohmygit.org/](https://ohmygit.org/){target="_blank"}
+-   Happy Git With R by Jenny Bryan is an amazing resource
+    -   [Basic workflows](https://happygitwithr.com/usage-intro.html){target="_blank"}
+    -   [What to do if things get really messed up](https://happygitwithr.com/burn.html){target="_blank"}
+
+## Take Aways
+
+Don't be afraid to mess up! Just like with R, there are a ton of online resources about git and GitHub, and I've always been able to solve problems I've run into by Googling an error message!
+
+### You can do it!
