@@ -1,0 +1,48 @@
+---
+title: "The **Why** and **How** of R package development"
+subtitle: "UW R-Ladies"
+date: "21 April 2023"
+format: 
+  revealjs: 
+    theme: sky
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    # embed-resources: true
+editor: source
+execute:
+  echo: true
+---
+
+## **What** is an R package?
+
+::: {style="font-size: 1.3em; color: red;"}
+> "Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data."\
+> ~-Hadley Wickham and Jenny Bryan in [[R Packages]{.underline}](https://r-pkgs.org/){target="_blank"}~    
+
+::: 
+
+## R packages are...
+
+::: incremental
+-   #### Portable 
+    * Everything in an R package directory (functions, documentation, data, etc.) is "built" into a "tarball" (packageName.tar.gz) that can easily be downloaded, installed into your local R package library, and loaded into R
+-   #### Open source
+    * If you install a package, you can see all the function code
+
+:::
+
+## **Why** would I want to make an R package?
+
+::: incremental
+- Share R functions with others (for a general audience!)
+  * via the **C**omprehensive **R** **A**rchive **N**etwork [(CRAN)](https://cran.r-project.org/web/packages/available_packages_by_date.html){target="_blank"}, [Bioconductor](https://www.bioconductor.org/packages/release/BiocViews.html#___Software){target="_blank"}, even GitHub
+- Share R functions with others (in your lab, company, etc.)
+  * via GitHub or other file sharing tool
+- Store functions for yourself! 
+::: 
+
+
+## Elements of an R Package
+
+## 
