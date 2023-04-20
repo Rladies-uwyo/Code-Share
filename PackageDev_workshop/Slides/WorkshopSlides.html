@@ -6,7 +6,9 @@
 <script src="WorkshopSlides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="WorkshopSlides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="WorkshopSlides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="WorkshopSlides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="WorkshopSlides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="WorkshopSlides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="WorkshopSlides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.313">
 
   <title>The Why and How of R package development</title>
@@ -375,9 +377,21 @@
 </section>
 <section id="elements-of-an-r-package" class="slide level2">
 <h2>Elements of an R Package</h2>
+<div>
+<p><i class="fa-solid fa-folder-open" aria-label="folder-open"></i> <span style="font-family:Courier New;font-weight: bold">Package</span></p>
+<p><i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> <i class="fa-solid fa-folder-open" aria-label="folder-open"></i> <span style="font-family:Courier New;font-weight: bold">R</span>: contains R code files; each function in its own file<br>
+<i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> <i class="fa-solid fa-folder-open" aria-label="folder-open"></i> <span style="font-family:Courier New;font-weight: bold">man</span>: contains documentation files for each function<br>
+<i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> <span style="font-family:Courier New;font-weight: bold">DESCRIPTION</span>: A file containing key package metadata<br>
+<i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> <span style="font-family:Courier New;font-weight: bold">NAMESPACE</span>: A file that determines which other packages your package relies on, which functions your package exports, etc.</p>
+</div>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li>ebook about R package development <a href="https://r-pkgs.org/" target="_blank"><u>R Packages</u></a><br>
+</li>
+<li>Official CRAN manual for writing R pacakges: <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html" target="_blank"><u>Writing R Extensions</u></a></li>
+</ul>
 <div class="footer footer-default">
 
 </div>
