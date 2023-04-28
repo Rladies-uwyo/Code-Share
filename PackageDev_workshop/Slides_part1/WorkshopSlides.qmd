@@ -15,15 +15,15 @@ execute:
 ---
 
 ## Topics
+
 ::: {.fragment .highlight-blue}
-1. What is an R package, and why would I make one?    
-2. Special considerations for writing functions in R packages     
-3. Brainstorm ideas for your own package
+1.  What is an R package, and why would I make one?\
+2.  Special considerations for writing functions in R packages\
+3.  Brainstorm ideas for your own package
 :::
-4. Building a "dummy" package using R Studio and devtools       
-5. Set up and start building your own package
 
-
+4.  Building a "dummy" package using R Studio and devtools\
+5.  Set up and start building your own package
 
 ## *What* is an R package?
 
@@ -35,18 +35,23 @@ execute:
 ## R packages are...
 
 ::: incremental
--   #### Portable
+-   
+
+    #### Portable
 
     -   Everything in an R package directory (functions, documentation, data, etc.) is "built" into a "tarball" (`packageName.tar.gz`) that is easy to download, install and load
 
--   #### Open source
+-   
+
+    #### Open source
 
     -   If you install a package, you can see all the function code
-
 :::
 
 ## 
+
 ### Inside the `geom_point()` function in ggplot2
+
 ```{r}
 library(ggplot2)
 geom_point
@@ -74,27 +79,29 @@ geom_point
 
 ::: {.fragment .highlight-blue}
 {{< fa arrow-right >}} {{< fa folder-open >}} [R/]{style="font-family:Courier New;font-weight: bold"}: contains R code files that contain function(s)
-::: 
+:::
 
 {{< fa arrow-right >}} {{< fa folder-open >}} [man/]{style="font-family:Courier New;font-weight: bold"}: contains documentation files for each function\
 
 ::: {.fragment .highlight-blue}
 {{< fa arrow-right >}} [DESCRIPTION]{style="font-family:Courier New;font-weight: bold"}: A file containing key package metadata\
-::: 
+:::
 
 {{< fa arrow-right >}} [NAMESPACE]{style="font-family:Courier New;font-weight: bold"}: A file that determines which other packages your package relies on, which functions your package exports, etc.
 
 ## Optional additional elements
 
-{{< fa arrow-right >}} {{< fa folder-open >}} [data/]{style="font-family:Courier New;font-weight: bold"}: Contains example dataset(s) as .rda files        
-{{< fa arrow-right >}} {{< fa folder-open >}} [inst/]{style="font-family:Courier New;font-weight: bold"}: Can contain multiple objects, including a [CITATION]{style="font-family:Courier New"} file                
-{{< fa arrow-right >}} {{< fa folder-open >}} [tests/]{style="font-family:Courier New;font-weight: bold"}: Contains files that perform automated tests of each function         
-{{< fa arrow-right >}} {{< fa folder-open >}}        [vignettes/]{style="font-family:Courier New;font-weight: bold"}: Contains package vignette(s) as .Rmd files      
-{{< fa arrow-right >}} {{< fa folder-open >}} [LICENSE]{style="font-family:Courier New;font-weight: bold"}: A file that explains the license you want to use for your package (e.g. Creative Commons, MIT, etc.)        
-{{< fa arrow-right >}} {{< fa folder-open >}} [README.Rmd]{style="font-family:Courier New;font-weight: bold"}: A file that explains your package, displays on GitHub repo homepage and on CRAN 
+{{< fa arrow-right >}} {{< fa folder-open >}} [data/]{style="font-family:Courier New;font-weight: bold"}: Contains example dataset(s) as .rda files\
+{{< fa arrow-right >}} {{< fa folder-open >}} [inst/]{style="font-family:Courier New;font-weight: bold"}: Can contain multiple objects, including a [CITATION]{style="font-family:Courier New"} file\
+{{< fa arrow-right >}} {{< fa folder-open >}} [tests/]{style="font-family:Courier New;font-weight: bold"}: Contains files that perform automated tests of each function\
+{{< fa arrow-right >}} {{< fa folder-open >}} [vignettes/]{style="font-family:Courier New;font-weight: bold"}: Contains package vignette(s) as .Rmd files\
+{{< fa arrow-right >}} {{< fa folder-open >}} [LICENSE]{style="font-family:Courier New;font-weight: bold"}: A file that explains the license you want to use for your package (e.g. Creative Commons, MIT, etc.)\
+{{< fa arrow-right >}} {{< fa folder-open >}} [README.Rmd]{style="font-family:Courier New;font-weight: bold"}: A file that explains your package, displays on GitHub repo homepage and on CRAN
 
 ## R Function Basics
-General function structure: 
+
+General function structure:
+
 ```{r}
 function_name <- function(parameters){
   output <- doSomething(parameters)
@@ -102,10 +109,10 @@ function_name <- function(parameters){
 }
 ```
 
+##  {auto-animate="true"}
 
-
-## {auto-animate="true"}
 ### Example:
+
 ```{r eval=TRUE}
 # define the function
 mean_two_numbers <- function(num_1, num_2) {
@@ -114,8 +121,10 @@ mean_two_numbers <- function(num_1, num_2) {
 }
 ```
 
-## {auto-animate=true}
+##  {auto-animate="true"}
+
 ### Example:
+
 ```{r eval=TRUE}
 # define the function
 mean_two_numbers <- function(num_1, num_2) {
@@ -126,32 +135,32 @@ mean_two_numbers <- function(num_1, num_2) {
 # use the function
 mean_two_numbers(1,2)
 ```
- 
-## Practice! 
-::: {.fragment .fade-in-then-semi-out}       
 
-- Write a function with...        
-  - a single input: a "name" character string      
-  - a single output: the phrase "Hello [name]" 
-  
-::: 
+## Practice!
 
-##  
-- Write a function with...       
-  - a single input: a character string that is either "even" or "odd"
-  - a single output: a numeric vector that returns the even or odd numbers between 1 and 10    
-  
-::: {.fragment}
-  - now, add another input(s) so the user can define the start and end of the numeric sequence  
-  
+::: {.fragment .fade-in-then-semi-out}
+-   Write a function with...
+    -   a single input: a "name" character string\
+    -   a single output: the phrase "Hello \[name\]"
 :::
-  
+
+## 
+
+-   Write a function with...
+    -   a single input: a character string that is either "even" or "odd"
+    -   a single output: a numeric vector that returns the even or odd numbers between 1 and 10
+
+::: fragment
+-   now, add another input(s) so the user can define the start and end of the numeric sequence
+:::
 
 ## R Functions in Packages - Special Considerations to make the user experience better (and pass CRAN checks!)
-##
-### Function names and arguments should be meaningful! 
 
-::: {.fragment .fade-in-then-semi-out}  
+## 
+
+### Function names and arguments should be meaningful!
+
+::: {.fragment .fade-in-then-semi-out}
 ```{r}
 function1 <- function(argument1, argument2) {
   output1 <- argument1[argument2,]
@@ -161,8 +170,9 @@ function1(argument1 = mtcars, argument2 = 2)
 ```
 :::
 
-::: {.fragment .fade-in-then-semi-out}  
+::: {.fragment .fade-in-then-semi-out}
 Better...
+
 ```{r}
 getRow <- function(dat, rowInd) {
   newRow <- dat[rowInd,]
@@ -173,11 +183,13 @@ getRow(dat = mtcars, rowInd = 3)
 ```
 :::
 
-##
+## 
+
 ### Default arguments can make it easier on users
 
-::: {.fragment .fade-in-then-semi-out}  
+::: {.fragment .fade-in-then-semi-out}
 Example: The getRow() function automatically returns the first row of a data frame, unless the user specifies otherwise
+
 ```{r}
 getRow <- function(dat, rowInd = 1) {
   newRow <- dat[rowInd,]
@@ -188,22 +200,22 @@ getRow(dat = mtcars)
 ```
 :::
 
-
-::: {.fragment .fade-in-then-semi-out}  
+::: {.fragment .fade-in-then-semi-out}
 The user can still give a different argument if they'd like
+
 ```{r}
 getRow(dat = mtcars, rowInd = 4)
 ```
-
 :::
 
 ## 
-### Check that the function inputs are of the expected type (i.e. character, numeric, string, etc.) 
 
-::: {.fragment}
-::: {.panel-tabset}
+### Check that the function inputs are of the expected type (i.e. character, numeric, string, etc.)
 
+::: fragment
+::: panel-tabset
 ### Function
+
 ```{r}
 getRow <- function(dat, rowInd = 1) {
   # check that the 'dat' argument is a data frame
@@ -221,12 +233,14 @@ getRow <- function(dat, rowInd = 1) {
 ### Example
 
 Try to make the 'dat' argument a vector
+
 ```{r, error=TRUE}
 getRow(dat = c(1,2,3,4))
 ```
 
-::: {.fragment}
+::: fragment
 Try to make the 'rowInd' argument a character
+
 ```{r, error=TRUE}
 getRow(dat = mtcars, rowInd = "3")
 ```
@@ -235,11 +249,13 @@ getRow(dat = mtcars, rowInd = "3")
 :::
 
 ## 
-### Provide informative error messages! 
-::: {.fragment}
-::: {.panel-tabset}
 
+### Provide informative error messages!
+
+::: fragment
+::: panel-tabset
 ### Before
+
 ```{r, error = TRUE}
 getRow <- function(dat, rowInd = 1) {
   # check that the 'dat' argument is a data frame
@@ -278,49 +294,60 @@ getRow(dat = mtcars, rowInd = "3")
 :::
 
 ## 
-* ### Include '...' in the argument list
 
-:::{.fragment}
+-   
+
+    ### Include '...' in the argument list
+
+::: fragment
 ```{r}
 getRow <- function(dat, rowInd = 1, ...) {
   newRow <- dat[rowInd,]
   return(newRow)
 }
 ```
-
 :::
 
-::: {.fragment}
-* ### Don't make changes to the user's environment without changing them back before exiting the function
-  - Example: Don't change settings in "par" without returning those settings to the state they were before the function! 
+::: fragment
+-   
+
+    ### Don't make changes to the user's environment without changing them back before exiting the function
+
+    -   Example: Don't change settings in "par" without returning those settings to the state they were before the function!
 :::
 
 ## R Functions: Further Reading
+
 ::: columns
 ::: {.column width="50%"}
 Check out the ["functions" chapter](https://adv-r.hadley.nz/functions.html#functions){target="_blank"} in Hadley Wickham's book [Advanced R]{.underline}
-::: 
+:::
+
 ::: {.column width="50%"}
 [![](slideImgs/AdvancedRCover.png){fig-alt="Cover of Advanced R Book" width="300"}](https://adv-r.hadley.nz/)
 :::
-::: 
+:::
 
 ## Next Friday, we'll go over the basic steps of making a package using a fake example, and then start building your own basic pacakge framework!
 
-* ### We'll use RStudio and the "devTools" package, as well as GitHub for version control and easy sharing down the road! 
+-   
+
+    ### We'll use RStudio and the "devTools" package, as well as GitHub for version control and easy sharing down the road!
 
 ## Prepare for next week:
 
-1. What problem(s) will you package address? 
-    - [Is there a set of functions you or your collaborators use all the time?]{style="font-size: .75em"} 
-    - [Have you figured out a workflow that could be helpful for others?]{style="font-size: .75em"}
-2. How broad is your audience? How widely will you share your package?
-3. What will your package be called? [Some helpful advice](https://r-pkgs.org/workflow101.html#name-your-package){target="_blank"}
+1.  What problem(s) will you package address?
+    -   [Is there a set of functions you or your collaborators use all the time?]{style="font-size: .75em"}
+    -   [Have you figured out a workflow that could be helpful for others?]{style="font-size: .75em"}
+2.  How broad is your audience? How widely will you share your package?
+3.  What will your package be called? [Some helpful advice](https://r-pkgs.org/workflow101.html#name-your-package){target="_blank"}
+
 ```{r, eval = FALSE}
 library(available)
 available("Yay", browse = FALSE)
 ```
-4. What other packages will yours "depend" on? 
+
+4.  What other packages will yours "depend" on?
 
 ## General Resources
 

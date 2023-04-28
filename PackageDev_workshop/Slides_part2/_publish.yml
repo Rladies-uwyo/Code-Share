@@ -1,0 +1,4 @@
+- source: WorkshopSlides.qmd
+  quarto-pub:
+    - id: 436ed49e-9b72-438a-b910-eff6cc1cf04c
+      url: 'https://quartopub.com/sites/aestears/the-why-and-how-of-r-package-development-part-2'

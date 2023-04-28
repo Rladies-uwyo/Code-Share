@@ -1,0 +1,258 @@
+---
+title: "The *Why* and *How* of R package development: Part 2"
+subtitle: "UW R-Ladies"
+date: "28 April 2023"
+format: 
+  revealjs: 
+    theme: simple
+    chalkboard: true
+    slide-number: true
+    show-slide-number: all
+    # embed-resources: true
+editor: source
+execute:
+  echo: true
+---
+
+## Topics
+
+1.  What is an R package, and why would I make one?\
+2.  Special considerations for writing functions in R packages\
+3.  Brainstorm ideas for your own package
+
+::: {.fragment .highlight-blue}
+4.  Making functions generalizeable
+5.  Building a "dummy" package using R Studio and devtools\
+6.  Set up and start building your own package
+:::
+
+# Generalizeable Functions in R packages
+
+## What does "generalizeable" mean?
+
+When you write an R package, you're sending your functions out into the world for others to use , and you want them to be successful! An ideal R function...
+
+1)  Works consistently in the scenarios it is meant for\
+2)  Has clear documentation explaining what it does and how it should be used\
+3)  Signals the user when it doesn't work, and clearly explains why!
+
+## To achieve these goals, you need to think very carefully about the *type of data* your functions require as inputs, and how you will *communicate those requirements* to users
+
+. . .
+
+### [How specific do the inputs actually need to be? Can I relax my requirements at all?]{style="color: #42069f"}
+
+## 
+
+[**Example:**]{style="color: #42069f"} To work in your function, a dataset must have a column called "date" with a date in MM-DD-YYYY POSIXct format and a column with character strings of species names called "Species". There must be data from at least two different consecutive days.
+
+```{r, echo = FALSE}
+knitr::kable(
+  data.frame("date" = c("12-01-1990", "12-01-1990", "12-02-1990"), 
+           "Species" = c("Pinus contorta", "Heterotheca villosa", "Arctostaphylos uva-ursi")
+           )
+  )
+```
+
+## 
+
+[**Strategy 1:**]{style="color: #42069f"} Require the user to provide *exact* function inputs, and return informative errors when they doesn't meet the function's requirements
+
+::: incremental
+-   check the data frame names (do they include "date" and "Species")?
+-   check the column types (is "date" POSIXct? is "Species" character?)
+-   check that "date" has data from at least two consecutive days
+-   if the data doesn't pass the checks, then return errors telling the user how to the input
+:::
+
+## 
+
+[**Strategy 2:**]{style="color: #42069f"} Require specific data types, etc., but allow users to provide their own column names
+
+::: incremental
+-   include function argument(s) that indicate the names of the date and species columns, e.g. "Species_col" = "speciesName" and "date_col" = "datetime"
+    -   within the function, use those arguments to rename the data frame with your expected column names ("Species" and "date")
+    -   rename the output with the input names when you finish the function ("speciesName" and "datetime")
+-   check data types and structure of required columns, with informative error messages
+:::
+
+## 
+
+[**Strategy 3:**]{style="color: #42069f"} Allow users to provide their own column names, and make function options for multiple possible data types
+
+::: incremental
+-   In addition to the column name arguments above...
+-   the "Species" column could be a character or a factor, make options inside the function to execute calculations for both data types
+:::
+
+## General considerations:
+
+-   Make sure the names and data types of a function output are the same as a corresponding function input
+-   If you're performing the same checks in multiple functions, you can write a "check" function that you can use internal to your other functions
+-   Keep your audience in mind! Typically, the generality of your functions should be inversely correlated to the size/breadth of your audience
+
+# Using `devtools` to make a dummy R package!
+
+## Chose a package name
+
+-   The name can only consist of letters, numbers, and periods, i.e., ..
+-   It must start with a letter.
+-   It cannot end with a period.
+
+. . .
+
+### We'll use "rowGetR"
+
+## Set up the package structure
+
+Make sure the `devtools` R package is downloaded and installed
+
+```{r, eval=FALSE}
+library(devtools)
+# create a package skeleton with an R project in your specified directory
+create_package("~/Documents/rowGetR")
+```
+
+. . .
+
+In the R studio project window for the package, you'll see a "Build" tab
+
+![](SlideImgs/BuildTab.png){width="800"}
+
+## Connect to GitHub
+::: incremental
+* Use `usethis::use_git()` to make the package directory a git repository (on your local drive)
+* Go to your gitHub account and make a new repository with the same name as your package (make sure it has nothing, not even a README!)
+* In the Git pane in R Studio, click on the “two purple boxes and a white square” in the Git pane. Click “Add remote”, and copy the HTTPS URL and name of your online repo
+* [More Details](https://happygitwithr.com/existing-github-last.html#create-and-connect-a-github-repo-without-usethis){target="_blank"}
+:::
+
+## Now we'll add a function
+
+1.  Make a new R script inside the R /folder, call it "getRow.R"
+2.  Add this function:
+
+```{r}
+getRow <- function(dat, rowInd = 1, ...) {
+  # check that the 'dat' argument is a data frame
+  if (is.data.frame(dat) == FALSE) {
+    stop("The 'dat' argument must be a data frame")
+  }
+  # check that the 'ind' argument is numeric
+  stopifnot("The 'rowInd' argument must be numeric" = is.numeric(rowInd))
+  
+  newRow <- dat[rowInd,]
+  return(newRow)
+}
+```
+
+## Now we need to add documentation to the function
+::: columns
+::: {.column width="50%"}
+With your cursor inside of the function definition, click the "wand" button on the top of the script, and select "Insert Roxygen Skeleton"
+
+:::
+::: {.column width="50%"}
+![](SlideImgs/RoxygenSkeleton.png){width="400"}
+:::
+:::
+
+## Fill in the skeleton
+
+[**Title**:](https://r-pkgs.org/man.html#title){target="_blank"} Written in sentence case without a period at the end, followed by an empty line. Clearly state what the function does in a few words\
+
+  * e.g. "Extracts row(s) from a data frame"
+
+##
+[**Description**:](https://r-pkgs.org/man.html#description){target="_blank"} A short paragraph that describes what the function does and it's most important features. Isn't automatically in the Roxygen skeleton, must be added with '@description'
+
+  * e.g. "@description `getRow()` extracts a row or rows from a data frame. Rows are extracted by numerical index that is supplied by the user."
+
+## 
+[**Arguments**:](https://r-pkgs.org/man.html#arguments){target="_blank"} Describe each of the arguments to the function in detail. Explain the required format and type, as well as any defaults
+
+  * @param dat A data frame from which a row is extracted.
+
+  * @param rowInd Either a single value or a vector of numeric arguments that
+ indicates the index or indices of the rows to be extracted from `dat`. The default value is "1"
+ 
+  * @param ... further arguments to be passed to `getRow`.
+
+## 
+[**Returns**:](https://r-pkgs.org/man.html#sec-man-returns){target="_blank"} Describe the structure and format of everything that is returned by the function
+
+  * @return `getRow` returns a data frame that contains the row or rows of the `dat` argument that are specified in the `rowInd` argument. The column names and types are the same as in `dat`.
+
+##
+The `@export` tag is automatically included in the Roxygen skeleton. This indicates that you want this function to be "exported" by your package (i.e. not an internal function)
+
+##
+[**Examples**:](https://r-pkgs.org/man.html#sec-man-examples){target="_blank"} Give one or more examples of the function, which will be run every time that the function is checked and that will be viewed in the documentation. 
+
+  * @examples getRow(dat = datasets::mtcars, rowInd = c(2,3))
+
+## Notes: 
+* Roxygen documentation uses a fixed text width. You can make R Studio automatically wrap text in a comment with "Code > Reflow Comment" (Ctrl/Cmd+Shift+/).
+
+* You can also make R studio show a line at the margin edge in "Global Options > Code > Display"
+    * Check "Show Margin" and make sure that "Margin Column" is set to 80
+    
+## Whenever you want to render documentation, use `devtools::document()`
+* Note: The working directory must be the main Package folder (e.g. "rowGetR")
+* .md files will appear in the man/ folder (read only!)
+
+## Let's edit the DESCRIPTION file!
+
+::: incremental
+* [**Title**:](https://r-pkgs.org/description.html#sec-description-title-and-description){target="_blank"} One-line description of the package in Title Case without a period at the end
+
+* **Description**: A more detailed description of the package, up to one paragraph long
+
+  * Don't start either with "This package..." "A package for..." etc.
+  * Don't include the package name
+  
+
+* **URL** or **BugReports** fields, which give the URL for the package or the GitHub page where you can report bugs
+:::
+
+## 
+**Author Information**: Information about the author(s), in a specific format
+
+  * Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+           
+. . . 
+
+[**License**:](https://r-pkgs.org/description.html#the-license-field){target="_blank"} Indicates which License you want to use.
+
+   * You can use functions in the `usethis` package to automatically fill in the relevant fields, depending on which license you want to use 
+      * e.g. `use_mit_license()` or `use_gpl3_license()`
+      
+
+## 
+[**Imports**:](https://r-pkgs.org/description.html#sec-description-imports-suggests){target="_blank"} lists the R packages (or specific functions in those R packages) that are required by the functions in your package
+
+  * e.g. the getRow() function uses the `slice()` function from the `dplyr` R package. To add     `dplyr` to the DESCRIPTION file, use 
+```{r, eval = FALSE}
+usethis::use_package("dplyr")
+```
+
+. . . 
+
+**Suggests**: gives a list of R packages that are used in the development of your package (e.g. in making vignettes), or improve the package but aren't *required*
+  
+  * You can use the `use_package()` function, but include "Suggests" inside the function call
+  
+  
+## Let's load and check the package! 
+* Use `devtools::load_all()` to internally build package binaries and load them into memory. This is how we test functions, and make sure the package passes important checks!
+  * If you don't get an error, then the package has loaded! 
+  
+. . . 
+
+* Now you can test functions, look at documentation, and "check" the function. The `devtools::check()` function runs the R CMD CHECK command, which runs a series of formal checks. Your package must pass all of these checks, especially if you want to submit to CRAN! 
+
+## Now lets build the package! 
+
+Your package has passed the R CMD CHECK, and now you want to build it into a "tarball" to distribute to others. You can do this easily using `devtools::build()` 
